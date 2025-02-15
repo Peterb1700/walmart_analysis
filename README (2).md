@@ -1,134 +1,153 @@
-# Walmart Data Analysis: End-to-End Power BI + SQL + Python Project
+# Walmart Sales Data Analysis: End-to-End Data Pipeline & Visualization Project
+
+---
 
 ## Project Overview
 
-
-This project is an end-to-end data analysis solution designed to extract critical business insights from Walmart sales data. I utilized Python for data processing and analysis, SQL for advanced querying, and PowerBI for Visualization. 
-
----
-
-## Project Steps
-
-### 1. Set Up the Environment
-   - **Tools Used**: Visual Studio Code (VS Code), Python, SQL (PostgreSQL)
-   - **Goal**: Create a structured workspace within VS Code and organize project folders for smooth development and data handling.
-
-### 2. Set Up Kaggle API
-   - **API Setup**: Obtain your Kaggle API token from [Kaggle](https://www.kaggle.com/) by navigating to your profile settings and downloading the JSON file.
-   - **Configure Kaggle**: 
-      - Place the downloaded `kaggle.json` file in your local `.kaggle` folder.
-      - Use the command `kaggle datasets download -d <dataset-path>` to pull datasets directly into your project.
-
-### 3. Download Walmart Sales Data
-   - **Data Source**: Use the Kaggle API to download the Walmart sales datasets from Kaggle.
-   - **Dataset Link**: [Walmart Sales Dataset](https://www.kaggle.com/najir0123/walmart-10k-sales-datasets)
-   - **Storage**: Save the data in the `data/` folder for easy reference and access.
-
-### 4. Install Required Libraries and Load Data
-   - **Libraries**: Install necessary Python libraries using:
-     ```bash
-     pip install pandas numpy sqlalchemy mysql-connector-python psycopg2
-     ```
-   - **Loading Data**: Read the data into a Pandas DataFrame for initial analysis and transformations.
-
-### 5. Explore the Data
-   - **Goal**: Conduct an initial data exploration to understand data distribution, check column names, types, and identify potential issues.
-   - **Analysis**: Use functions like `.info()`, `.describe()`, and `.head()` to get a quick overview of the data structure and statistics.
-
-### 6. Data Cleaning
-   - **Remove Duplicates**: Identify and remove duplicate entries to avoid skewed results.
-   - **Handle Missing Values**: Drop rows or columns with missing values if they are insignificant; fill values where essential.
-   - **Fix Data Types**: Ensure all columns have consistent data types (e.g., dates as `datetime`, prices as `float`).
-   - **Currency Formatting**: Use `.replace()` to handle and format currency values for analysis.
-   - **Validation**: Check for any remaining inconsistencies and verify the cleaned data.
-
-### 7. Feature Engineering
-   - **Create New Columns**: Calculate the `Total Amount` for each transaction by multiplying `unit_price` by `quantity` and adding this as a new column.
-   - **Enhance Dataset**: Adding this calculated field will streamline further SQL analysis and aggregation tasks.
-
-### 8. Load Data into MySQL and PostgreSQL
-   - **Set Up Connections**: Connect to MySQL and PostgreSQL using `sqlalchemy` and load the cleaned data into each database.
-   - **Table Creation**: Set up tables in both MySQL and PostgreSQL using Python SQLAlchemy to automate table creation and data insertion.
-   - **Verification**: Run initial SQL queries to confirm that the data has been loaded accurately.
-
-### 9. SQL Analysis: Complex Queries and Business Problem Solving
-   - **Business Problem-Solving**: Write and execute complex SQL queries to answer critical business questions, such as:
-     - Revenue trends across branches and categories.
-     - Identifying best-selling product categories.
-     - Sales performance by time, city, and payment method.
-     - Analyzing peak sales periods and customer buying patterns.
-     - Profit margin analysis by branch and category.
-   - **Documentation**: Keep clear notes of each query's objective, approach, and results.
-
-### 10. Project Publishing and Documentation
-   - **Documentation**: Maintain well-structured documentation of the entire process in Markdown or a Jupyter Notebook.
-   - **Project Publishing**: Publish the completed project on GitHub or any other version control platform, including:
-     - The `README.md` file (this document).
-     - Jupyter Notebooks (if applicable).
-     - SQL query scripts.
-     - Data files (if possible) or steps to access them.
+This project showcases an end-to-end data analysis pipeline using Walmart’s 10k sales dataset from Kaggle. It covers every stage—from environment setup, data acquisition and cleaning, to advanced SQL querying and interactive visualization with Power BI. The project demonstrates practical applications of Python, SQL, and Power BI to extract actionable insights from real-world sales data, making it a valuable portfolio project for any data analyst or business intelligence professional.
 
 ---
 
-## Requirements
+## Tech Stack & Tools
 
-- **Python 3.8+**
-- **SQL Databases**: MySQL, PostgreSQL
-- **Python Libraries**:
-  - `pandas`, `numpy`, `sqlalchemy`, `mysql-connector-python`, `psycopg2`
-- **Kaggle API Key** (for data downloading)
+- **Programming Languages & Tools**: Python, SQL, Power BI, PostgreSQL, VS Code
+- **Key Python Libraries**: 
+  - `pandas` for data manipulation and cleaning
+  - `sqlalchemy` for database connectivity
+  - `pymysql` and `psycopg2` for SQL database interfacing
+- **Data Source**: [Walmart 10k Sales Dataset on Kaggle](https://www.kaggle.com/datasets/najir0123/walmart-10k-sales-datasets)  
+- **Dashboarding**: Power BI for interactive visualizations and business insights  
+- **Version Control**: Git & GitHub
 
-## Getting Started
+---
 
-1. Clone the repository:
-   ```bash
-   git clone <repo-url>
-   ```
-2. Install Python libraries:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Set up your Kaggle API, download the data, and follow the steps to load and analyze.
+## Project Workflow
+
+### 1. Environment & Dataset Setup
+
+- **VS Code & Virtual Environment**: 
+  - Created a dedicated project folder in VS Code.
+  - Set up a Python virtual environment using `python -m venv myenv` to manage dependencies.
+- **Kaggle API Configuration**: 
+  - Downloaded the `kaggle.json` API token from Kaggle.
+  - Placed the token in the local `.kaggle` folder to authenticate and download datasets programmatically.
+- **Dataset Download**: 
+  - Retrieved the Walmart dataset using the command:
+    ```bash
+    kaggle datasets download -d najir0123/walmart-10k-sales-datasets
+    ```
+  - Unzipped the downloaded file to access the CSV data.
+
+---
+
+### 2. Data Acquisition & Cleaning
+
+- **Data Loading**:
+  - Loaded the CSV into a Pandas DataFrame:
+    ```python
+    import pandas as pd
+    df = pd.read_csv('Walmart.csv', encoding_errors='ignore')
+    ```
+- **Data Exploration**:
+  - Reviewed the dataset’s structure with `df.info()`, `df.describe()`, and `df.head()`.
+  - Identified issues such as missing values, duplicates, and improper data types (e.g., `unit_price` stored as an object) :contentReference[oaicite:0]{index=0}.
+- **Cleaning Process**:
+  - **Duplicates & Missing Values**: Removed duplicates using `df.drop_duplicates(inplace=True)` and handled missing values with `df.dropna(inplace=True)`.
+  - **Currency Conversion**: Removed the dollar sign from `unit_price` and converted it to a float:
+    ```python
+    df['unit_price'] = df['unit_price'].str.replace('$', '').astype(float)
+    ```
+  - **Feature Engineering**: Created a new column `total` by multiplying `unit_price` with `quantity` to compute transaction totals.
+- **Outcome**: The refined dataset contained 9,969 records with 11 cleaned columns, ready for deeper analysis.
+
+---
+
+### 3. Data Loading & SQL Analysis
+
+- **Database Setup**:
+  - Configured PostgreSQL and MySQL connections using SQLAlchemy. Adjusted connection strings to handle special characters (e.g., replacing `@` with `%40` in passwords).
+- **Data Import**:
+  - Loaded the cleaned DataFrame into PostgreSQL:
+    ```python
+    from sqlalchemy import create_engine
+    engine_psql = create_engine("postgresql+psycopg2://postgres:Columdos1234%40@localhost:5432/walmart_db")
+    df.to_sql(name='walmart', con=engine_psql, if_exists='append', index=False)
+    ```
+- **SQL Analysis**:
+  - **Exploratory Queries**: Executed queries to get an overview of transactions, payment methods, and branch distribution.
+  - **Advanced SQL Techniques**:
+    - **Window Functions**: Utilized to rank branches by average ratings per category.
+    - **Common Table Expressions (CTEs)**: Employed to identify the busiest day for each branch.
+    - **Aggregations & Grouping**: Analyzed sales trends, payment methods, and profit margins across different dimensions.
+  - **Sample SQL Query** (Busiest Day per Branch):
+    ```sql
+    WITH date_cte AS (
+      SELECT branch, 
+             TO_CHAR(TO_DATE(date, 'DD/MM/YY'), 'Day') as day_name,
+             COUNT(*) as no_transactions,
+             RANK() OVER(PARTITION BY branch ORDER BY COUNT(*) DESC) as rank
+      FROM walmart
+      GROUP BY branch, day_name
+    )
+    SELECT branch, day_name, no_transactions
+    FROM date_cte
+    WHERE rank = 1;
+    ```
+  - These queries provided critical insights into sales patterns and customer behavior :contentReference[oaicite:1]{index=1}.
+
+---
+
+### 4. Visualization & Dashboard Development
+
+- **Data Preparation in Power BI**:
+  - Imported the cleaned data into Power BI.
+  - Resolved date formatting issues by splitting and merging date components in the Power Query Editor, converting text dates in DD-MM-YYYY format to proper date types.
+- **Dashboard Features**:
+  - **Interactive Elements**: Added slicers for time of day, state, and payment method to enable dynamic filtering.
+  - **Visualizations**:
+    - **Pie Charts**: Displayed total spent per payment method.
+    - **Column Charts**: Visualized total revenue per category.
+    - **Line Charts**: Illustrated average ratings over time after resolving issues with dense date values.
+  - **Segmentation**: Added a `time_of_day` column in SQL to categorize transactions into Morning, Afternoon, and Evening, enhancing the segmentation in visualizations.
+- **Outcome**: The Power BI dashboard effectively communicates sales performance trends and offers interactive analysis capabilities for stakeholders.
+
+---
+
+## Challenges & Lessons Learned
+
+- **Data Quality Issues**: Encountered challenges with missing values, duplicate records, and inconsistent data types. Overcame these by applying rigorous data cleaning steps.
+- **Data Conversion**: Faced a hurdle in converting the `unit_price` column due to the presence of the dollar sign. Resolved it using a string replace method before type conversion.
+- **SQL Connectivity**: Special characters in PostgreSQL passwords (like the `@` symbol) required URL encoding to establish a successful connection.
+- **Date Formatting in Power BI**: Adjusting date formats in Power Query required splitting and merging date components, emphasizing the importance of data transformation in visualization tools.
+
+---
+
+## Key Insights
+
+- **Sales Distribution**: Analysis revealed that credit card transactions dominated, but there’s significant volume across e-wallets and cash payments.
+- **Branch Performance**: SQL queries identified branches with superior performance and highlighted trends in customer behavior.
+- **Revenue & Profitability**: Calculations on transaction totals and profit margins provided actionable insights into product category performance.
+- **Operational Efficiency**: The end-to-end pipeline—from data acquisition to visualization—demonstrates how integrating multiple tools can drive business intelligence and decision-making.
+
+---
+
+## Future Enhancements
+
+- **Real-Time Data Pipeline**: Automate the entire data ingestion process for real-time analytics.
+- **Predictive Analytics**: Incorporate machine learning models to forecast future sales trends.
+- **Enhanced Visualizations**: Expand the Power BI dashboard with more granular metrics and drill-down capabilities.
+- **Extended Data Sources**: Integrate additional datasets to enrich the analysis and provide a multi-faceted view of sales and operations.
 
 ---
 
 ## Project Structure
 
 ```plaintext
-|-- data/                     # Raw data and transformed data
-|-- sql_queries/              # SQL scripts for analysis and queries
-|-- notebooks/                # Jupyter notebooks for Python analysis
+|-- data/                     # Raw and cleaned datasets
+|-- sql_queries/              # SQL scripts for data analysis and EDA
+|-- notebooks/                # Jupyter Notebooks detailing Python analysis
+|-- dashboards/               # Power BI project files and resources
 |-- README.md                 # Project documentation
-|-- requirements.txt          # List of required Python libraries
-|-- main.py                   # Main script for loading, cleaning, and processing data
-```
----
+|-- requirements.txt          # Python dependencies list
+|-- main.py                   # Main script for data processing and loading
 
-## Results and Insights
-
-This section will include your analysis findings:
-- **Sales Insights**: Key categories, branches with highest sales, and preferred payment methods.
-- **Profitability**: Insights into the most profitable product categories and locations.
-- **Customer Behavior**: Trends in ratings, payment preferences, and peak shopping hours.
-
-## Future Enhancements
-
-Possible extensions to this project:
-- Integration with a dashboard tool (e.g., Power BI or Tableau) for interactive visualization.
-- Additional data sources to enhance analysis depth.
-- Automation of the data pipeline for real-time data ingestion and analysis.
-
----
-
-## License
-
-This project is licensed under the MIT License. 
-
----
-
-## Acknowledgments
-
-- **Data Source**: Kaggle’s Walmart Sales Dataset
-- **Inspiration**: Walmart’s business case studies on sales and supply chain optimization.
-
----
