@@ -1,4 +1,4 @@
-# Walmart Sales Data Analysis: End-to-End Data Pipeline & Visualization Project
+# Walmart Sales Data Analysis: End-to-End Data Pipeline & Visualization Project. Python, SQL, PowerBI
 
 
 
