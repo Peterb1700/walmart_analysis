@@ -15,7 +15,7 @@ This project showcases an end-to-end data analysis pipeline using Walmart’s 10
   - `pandas` for data manipulation and cleaning
   - `sqlalchemy` for database connectivity
   - `pymysql` and `psycopg2` for SQL database interfacing
-- **Data Source**: [Walmart 10k Sales Dataset on Kaggle](https://www.kaggle.com/datasets/najir0123/walmart-10k-sales-datasets)  
+- **Data Source**: [Walmart Sales Dataset on Kaggle](https://www.kaggle.com/datasets/najir0123/walmart-10k-sales-datasets)  
 - **Dashboarding**: Power BI for interactive visualizations and business insights  
 - **Version Control**: Git & GitHub
 
