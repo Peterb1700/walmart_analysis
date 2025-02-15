@@ -1,5 +1,12 @@
 # Walmart Sales Data Analysis: End-to-End Data Pipeline & Visualization Project
 
+
+
+![Screenshot 2025-02-15 120422](https://github.com/user-attachments/assets/63c8c5c3-0f3c-486c-93ad-b30040d1dcb8)
+
+
+
+
 ---
 
 ## Project Overview
