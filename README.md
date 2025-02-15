@@ -11,7 +11,7 @@
 
 ## Project Overview
 
-This project showcases an end-to-end data analysis pipeline using Walmart’s 10k sales dataset from Kaggle. It covers every stage—from environment setup, data acquisition and cleaning, to advanced SQL querying and interactive visualization with Power BI. The project demonstrates practical applications of Python, SQL, and Power BI to extract actionable insights from real-world sales data.
+This project showcases an end-to-end data analysis pipeline using Walmart’s sales dataset from Kaggle with 10,000 records. It covers every stage—from environment setup, data acquisition and cleaning, to advanced SQL querying and interactive visualization with Power BI. The project demonstrates practical applications of Python, SQL, and Power BI to extract actionable insights from real-world sales data.
 
 ---
 
