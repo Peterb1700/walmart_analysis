@@ -77,7 +77,7 @@ This project showcases an end-to-end data analysis pipeline using Walmart’s sa
   - Loaded the cleaned DataFrame into PostgreSQL:
     ```python
     from sqlalchemy import create_engine
-    engine_psql = create_engine("postgresql+psycopg2://postgres:Columdos1234%40@localhost:5432/walmart_db")
+    engine_psql = create_engine("postgresql+psycopg2://postgres:Banana%40@localhost:5432/walmart_db")
     df.to_sql(name='walmart', con=engine_psql, if_exists='append', index=False)
     ```
 - **SQL Analysis**:
